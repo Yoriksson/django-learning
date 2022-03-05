@@ -1,0 +1,31 @@
+version: "3.5"
+
+services:
+#  redis_worker:
+#    image: redis:6.2.1
+#    container_name: redis_worker_container
+#    restart:  unless-stopped
+#    command: --port 6378
+#    ports:
+#      - "6378:6378"
+#    networks:
+#      - postgres
+  postgres:
+    container_name: postgres_container
+    image: postgres:13
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - ./data/postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+
+volumes:
+  postgres:
+
+networks:
+  postgres:
+    driver: bridge
